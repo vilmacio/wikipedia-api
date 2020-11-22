@@ -11,11 +11,19 @@ export = function wikipedia (url: string | ArticleAttributes) {
     if (!url) throw new MissingParamError('url')
     if (typeof url === 'string') {
       stringValidation()
+    } else {
+      objectValidation()
     }
 
     function stringValidation () {
       if (String(url).search(/^https?:\/\/..\.wikipedia.org\/wiki\//) !== 0) {
-        throw new InvalidParamError('url', 'The url parameter must be a string')
+        throw new InvalidParamError('url', 'The provided wikipedia url is invalid')
+      }
+    }
+
+    function objectValidation () {
+      if (!url['article']) {
+        throw new MissingParamError('article')
       }
     }
   }
