@@ -15,7 +15,7 @@ export = function wikipedia (url: string | ArticleAttributes) {
 
     function stringValidation () {
       if (String(url).search(/^https?:\/\/..\.wikipedia.org\/wiki\//) !== 0) {
-        throw new InvalidParamError('url')
+        throw new InvalidParamError('url', 'The url parameter must be a string')
       }
     }
   }

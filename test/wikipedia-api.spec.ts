@@ -14,7 +14,8 @@ describe('wikipedia-api', () => {
     })
 
     test('should throws InvalidParamError if wikipedia url is invalid', () => {
-      expect(() => { wikipedia('invalid_url') }).toThrow(new InvalidParamError('url'))
+      expect(() => { wikipedia('invalid_url') })
+        .toThrow(new InvalidParamError('url', 'The url parameter must be a string'))
     })
   })
 })
