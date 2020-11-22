@@ -22,8 +22,11 @@ export = function wikipedia (url: string | ArticleAttributes) {
     }
 
     function objectValidation () {
-      if (!url['article']) {
-        throw new MissingParamError('article')
+      const requiredAttributes = ['article', 'lang']
+      for (const attribute of requiredAttributes) {
+        if (!url[attribute]) {
+          throw new MissingParamError(attribute)
+        }
       }
     }
   }
