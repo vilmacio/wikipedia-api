@@ -32,5 +32,15 @@ describe('wikipedia-api [instance]', () => {
       expect(() => { wikipedia(attributes) })
         .toThrow(new MissingParamError('article'))
     })
+
+    test('should throws MissingParamError if lang is not provided', () => {
+      const attributes:ArticleAttributes = {
+        article: 'any_article',
+        lang: null
+      }
+
+      expect(() => { wikipedia(attributes) })
+        .toThrow(new MissingParamError('lang'))
+    })
   })
 })
