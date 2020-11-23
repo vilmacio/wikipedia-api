@@ -20,7 +20,7 @@ export = function wikipedia (url: string | ArticleAttributes) {
     }
 
     function stringValidation () {
-      if (String(url).search(/^https?:\/\/..\.wikipedia.org\/wiki\//) !== 0) {
+      if (String(url).search(/^https?:\/\/...?\.wikipedia\.org\/wiki\//) !== 0) {
         throw new InvalidParamError('url', 'The provided wikipedia url is invalid')
       }
     }
