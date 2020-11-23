@@ -20,6 +20,11 @@ describe('wikipedia-api [instance]', () => {
       expect(() => { wikipedia('invalid_url') })
         .toThrow(new InvalidParamError('url', 'The provided wikipedia url is invalid'))
     })
+
+    test('should return a object on success', () => {
+      expect(typeof wikipedia('http://en.wikipedia.org/wiki/any_parameter'))
+        .toBe('object')
+    })
   })
 
   describe('when invoked with object parameter', () => {
@@ -41,6 +46,16 @@ describe('wikipedia-api [instance]', () => {
 
       expect(() => { wikipedia(attributes) })
         .toThrow(new MissingParamError('lang'))
+    })
+
+    test('should return a object on success', () => {
+      const attributes:ArticleAttributes = {
+        article: 'any_article',
+        lang: 'any_lang'
+      }
+
+      expect(typeof wikipedia(attributes))
+        .toBe('object')
     })
   })
 })
