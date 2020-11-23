@@ -5,6 +5,10 @@ import { ArticleAttributes } from './protocols/article'
 export = function wikipedia (url: string | ArticleAttributes) {
   return (() => {
     paramVerificator()
+
+    return {
+
+    }
   })()
 
   function paramVerificator () {
