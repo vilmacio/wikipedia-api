@@ -6,7 +6,8 @@
   "scripts": {
     "test:verbose":"jest --detectOpenHandles --runInBand",
     "test": "npm run test:verbose -- --silent --noStackTrace",
-    "test:staged": "npm run test -- --findRelatedTests ./tests/*.*"
+    "test:staged": "npm run test -- --findRelatedTests ./tests/*.*",
+    "test:ci":"npm run test -- --coverage"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
