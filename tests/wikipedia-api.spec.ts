@@ -2,8 +2,17 @@ import wikipedia from '../src/wikipedia-api'
 import { MissingParamError } from '../src/errors/missing-param'
 import { InvalidParamError } from '../src/errors/invalid-param'
 import { ArticleAttributes } from '../src/protocols/article'
+import nock from 'nock'
 
 describe('wikipedia-api [instance]', () => {
+  afterAll(() => {
+    nock(/^https?:\/\/..\.wikipedia.org\/wiki\//)
+      .get(/../)
+      .reply(200, {
+        inner: '<html>content</html>'
+      })
+  })
+
   describe('when imported', () => {
     test('should be a function', () => {
       expect(wikipedia).toBeTruthy()
