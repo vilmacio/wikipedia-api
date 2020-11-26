@@ -5,13 +5,12 @@ describe('Web Provider', () => {
   beforeAll(() => {
     nock('https://en.wikipedia.org/wiki')
       .get(/\/.*/)
-      .reply(200, {
-        inner: '<html>content</html>'
-      })
+      .reply(200, '<html>content</html>')
   })
 
-  test('should return 200 if article is found', async () => {
+  test('should return content if article is found', async () => {
     const response = await articlePage('any_article', 'en')
-    expect(response.statusCode).toBe(200)
+    expect(typeof response).toBe('string')
+    expect(response).toBe('<html>content</html>')
   })
 })
