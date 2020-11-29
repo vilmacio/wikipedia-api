@@ -5,9 +5,7 @@ import { ArticleAttributes } from './protocols/article'
 export = function wikipedia (url: string | ArticleAttributes) {
   return (() => {
     paramVerificator()
-
     return {
-
     }
   })()
 
@@ -17,6 +15,7 @@ export = function wikipedia (url: string | ArticleAttributes) {
       stringValidation()
     } else {
       objectValidation()
+      normalize()
     }
 
     function stringValidation () {
@@ -32,6 +31,10 @@ export = function wikipedia (url: string | ArticleAttributes) {
           throw new MissingParamError(attribute)
         }
       }
+    }
+
+    function normalize () {
+      url = `https://${url['lang']}.wikipedia.org/wiki/${url['article']}`
     }
   }
 }
