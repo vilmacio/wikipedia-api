@@ -4,12 +4,14 @@ import * as fetch from 'node-fetch'
 import ServiceError from '../src/errors/service-error'
 
 describe('Web Provider', () => {
+  const wikipediaURL = 'https://en.wikipedia.org/wiki/any_article'
+
   test('should return content if article is found', async () => {
     nock('https://en.wikipedia.org/wiki')
       .get(/\/.*/)
       .reply(200, '<html>content</html>')
 
-    const response = await articlePage('any_article', 'en')
+    const response = await articlePage(wikipediaURL)
     expect(typeof response).toBe('string')
     expect(response).toBe('<html>content</html>')
   })
@@ -19,14 +21,14 @@ describe('Web Provider', () => {
       .get(/\/.*/)
       .reply(404, '<html>content</html>')
 
-    const response = await articlePage('any_article', 'en')
+    const response = await articlePage(wikipediaURL)
     expect(response).toBeUndefined()
   })
 
   test('should throw ServiceError if fetch throws', async () => {
     jest.spyOn(fetch, 'default').mockImplementationOnce(() => { throw new Error() })
 
-    await expect(async () => { await articlePage('any_article', 'en') })
+    await expect(async () => { await articlePage(wikipediaURL) })
       .rejects.toThrow(new ServiceError('The connection failed. Try to set a correct language.'))
   })
 
@@ -35,12 +37,8 @@ describe('Web Provider', () => {
       .get(/\/.*/)
       .reply(200, '<html>content</html>')
 
-    const params = {
-      article: 'any_article',
-      lang: 'en'
-    }
     const fetchSpy = jest.spyOn(fetch, 'default')
-    await articlePage(params.article, params.lang)
-    expect(fetchSpy).toHaveBeenCalledWith(`https://${params.lang}.wikipedia.org/wiki/${params.article}`)
+    await articlePage(wikipediaURL)
+    expect(fetchSpy).toHaveBeenCalledWith(wikipediaURL)
   })
 })
