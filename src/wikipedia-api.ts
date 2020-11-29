@@ -41,7 +41,8 @@ export = function wikipedia (url: string | ArticleAttributes) {
   }
 
   async function innerHTML ():Promise<string> {
-    await articlePage(String(url))
-    return ''
+    const content = await articlePage(String(url))
+    const newContent = content.replace(/<script.*>.*<\/script>/, '')
+    return newContent
   }
 }
