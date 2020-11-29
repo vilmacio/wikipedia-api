@@ -89,4 +89,10 @@ describe('innerHTML()', () => {
     expect(articlePageSpy).toHaveBeenCalledTimes(2)
     expect(articlePageSpy).toHaveBeenCalledWith(wikipediaURL)
   })
+
+  test('should return a string on success', async () => {
+    const result = await wikipedia(wikipediaURL).innerHTML()
+    expect(typeof result).toBe('string')
+    expect(result).toBe('<html>content</html>')
+  })
 })
