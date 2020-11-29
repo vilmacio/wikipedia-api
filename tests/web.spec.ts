@@ -20,7 +20,6 @@ describe('Web Provider', () => {
       .reply(404, '<html>content</html>')
 
     const response = await articlePage('any_article', 'en')
-
     expect(response).toBeUndefined()
   })
 
@@ -29,5 +28,19 @@ describe('Web Provider', () => {
 
     await expect(async () => { await articlePage('any_article', 'en') })
       .rejects.toThrow(new ServiceError('The connection failed. Try to set a correct language.'))
+  })
+
+  test('should call fetch with correct value', async () => {
+    nock('https://en.wikipedia.org/wiki')
+      .get(/\/.*/)
+      .reply(200, '<html>content</html>')
+
+    const params = {
+      article: 'any_article',
+      lang: 'en'
+    }
+    const fetchSpy = jest.spyOn(fetch, 'default')
+    await articlePage(params.article, params.lang)
+    expect(fetchSpy).toHaveBeenCalledWith(`https://${params.lang}.wikipedia.org/wiki/${params.article}`)
   })
 })
