@@ -6,7 +6,6 @@ export const articlePage = async (article:string, lang: string):Promise<string> 
     const url = `https://${lang}.wikipedia.org/wiki/${article}`
     const response = await fetch(url)
     if (response.status === 200) return await response.text()
-    if (response.status === 404) return undefined
   } catch (error) {
     throw new ServiceError('The connection failed. Try to set a correct language.')
   }
