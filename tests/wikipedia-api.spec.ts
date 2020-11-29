@@ -1,4 +1,5 @@
 import wikipedia from '../src/wikipedia-api'
+import * as webProvider from '../src/providers/web'
 import { MissingParamError } from '../src/errors/missing-param'
 import { InvalidParamError } from '../src/errors/invalid-param'
 import { ArticleAttributes } from '../src/protocols/article'
@@ -66,5 +67,26 @@ describe('wikipedia-api [instance]', () => {
       expect(typeof wikipedia(attributes))
         .toBe('object')
     })
+  })
+})
+
+describe('innerHTML()', () => {
+  nock('https://en.wikipedia.org/wiki')
+    .persist()
+    .get(/\/.*/)
+    .reply(200, '<html>content</html>')
+
+  const wikipediaURL = 'http://en.wikipedia.org/wiki/any_article'
+  const articleAttributes = {
+    article: 'any_article',
+    lang: 'en'
+  }
+
+  test('should call web provider with correct value', async () => {
+    const articlePageSpy = jest.spyOn(webProvider, 'articlePage')
+    await wikipedia(wikipediaURL).innerHTML()
+    await wikipedia(articleAttributes).innerHTML()
+    expect(articlePageSpy).toHaveBeenCalledTimes(2)
+    expect(articlePageSpy).toHaveBeenCalledWith(wikipediaURL)
   })
 })
