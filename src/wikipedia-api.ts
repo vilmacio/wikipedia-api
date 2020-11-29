@@ -1,11 +1,13 @@
 import { InvalidParamError } from './errors/invalid-param'
 import { MissingParamError } from './errors/missing-param'
 import { ArticleAttributes } from './protocols/article'
+import { articlePage } from './providers/web'
 
 export = function wikipedia (url: string | ArticleAttributes) {
   return (() => {
     paramVerificator()
     return {
+      innerHTML
     }
   })()
 
@@ -36,5 +38,10 @@ export = function wikipedia (url: string | ArticleAttributes) {
     function normalize () {
       url = `https://${url['lang']}.wikipedia.org/wiki/${url['article']}`
     }
+  }
+
+  async function innerHTML ():Promise<string> {
+    await articlePage(String(url))
+    return ''
   }
 }
