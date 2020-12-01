@@ -95,5 +95,6 @@ describe('WIkipedia API', () => {
 
   afterAll(() => {
     nock.isDone()
+    nock.cleanAll()
   })
 })
