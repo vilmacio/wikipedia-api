@@ -42,7 +42,7 @@ export = function wikipedia (url: string | ArticleAttributes) {
 
   async function innerHTML ():Promise<string> {
     const content = await articlePage(String(url))
-    const newContent = content.replace(/<script.*>.*<\/script>/, '')
+    const newContent = content.replace(/<script.*>.*<\/script>/g, '')
     return newContent
   }
 }
