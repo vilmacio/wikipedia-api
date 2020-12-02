@@ -13,11 +13,16 @@ describe('Providers - E2E tests', () => {
       nock.disableNetConnect()
       const promise = fetch('https://en.wikipedia.org/wiki')
       await expect(promise).rejects.toThrow()
-      nock.cleanAll()
+    })
+
+    test('should return 200 if network connection is enabled', async () => {
+      nock.enableNetConnect()
+      const promise = await fetch('https://en.wikipedia.org/wiki')
+      expect(promise.status).toBe(200)
     })
   })
 
-  afterAll(() => {
+  afterEach(() => {
     nock.cleanAll()
   })
 })
