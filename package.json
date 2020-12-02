@@ -6,6 +6,8 @@
   "scripts": {
     "test:verbose": "jest --detectOpenHandles --runInBand",
     "test": "npm run test:verbose -- --silent --noStackTrace",
+    "test:unit": "npm run test -- -c jest.unit.config.js",
+    "test:e2e": "npm run test -- -c jest.e2e.config.js",
     "test:staged": "npm run test -- --findRelatedTests ./tests/*.*",
     "test:ci": "npm run test -- --coverage"
   },
