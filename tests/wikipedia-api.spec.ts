@@ -14,6 +14,8 @@ describe('WIkipedia API', () => {
       .reply(200, '<html>content</html>')
   })
 
+  const wikipediaURL = 'http://en.wikipedia.org/wiki/any_article'
+
   describe('default', () => {
     describe('when imported', () => {
       test('should be a function', () => {
@@ -33,7 +35,7 @@ describe('WIkipedia API', () => {
       })
 
       test('should return a object on success', () => {
-        expect(typeof wikipedia('http://en.wikipedia.org/wiki/any_parameter'))
+        expect(typeof wikipedia(wikipediaURL))
           .toBe('object')
       })
     })
@@ -72,17 +74,10 @@ describe('WIkipedia API', () => {
   })
 
   describe('innerHTML()', () => {
-    const wikipediaURL = 'http://en.wikipedia.org/wiki/any_article'
-    const articleAttributes = {
-      article: 'any_article',
-      lang: 'en'
-    }
-
     test('should call web provider with correct value', async () => {
       const articlePageSpy = jest.spyOn(webProvider, 'articlePage')
       await wikipedia(wikipediaURL).innerHTML()
-      await wikipedia(articleAttributes).innerHTML()
-      expect(articlePageSpy).toHaveBeenCalledTimes(2)
+      expect(articlePageSpy).toHaveBeenCalledTimes(1)
       expect(articlePageSpy).toHaveBeenCalledWith(wikipediaURL)
     })
 
